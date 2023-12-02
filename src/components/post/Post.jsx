@@ -1,14 +1,20 @@
 import "./post.css"
 import { MoreVert } from "@mui/icons-material"
 import axios from "axios"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { format } from "timeago.js"
 import { Link } from "react-router-dom"
+import { AuthContext } from "../../context/AuthContext"
 
 export default function Post({ post }) {
     const [like,setLike] = useState(post.likes.length)
     const [isLiked,setIsLiked] = useState(false)
     const [user,setUser] = useState({})
+    const { user: currentUser } = useContext(AuthContext)
+
+    useEffect(() => {
+      setIsLiked(post.likes.includes(currentUser._id));
+    }, [currentUser._id, post.likes])
 
     useEffect(()=>{
       const fetchUser = async ()=>{
@@ -19,6 +25,9 @@ export default function Post({ post }) {
     },[post.userId])
   
     const likeHandler =()=>{
+      try {
+        axios.put("/api/posts/" + post._id + "/like", { userId: currentUser._id });
+      } catch (err) {}
       setLike(isLiked ? like-1 : like+1)
       setIsLiked(!isLiked)
     }
@@ -30,7 +39,7 @@ export default function Post({ post }) {
             <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg"
-                src={user.profilePicture || "/person/noAvatar.png"}
+                src={user.profilePicture ? user.profilePicture : "/person/noAvatar.png"}
                 alt=""
               />
             </Link>

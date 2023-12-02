@@ -32,13 +32,17 @@ export default function Login() {
             <input placeholder="Email" type="email" required className="loginInput" ref={email} />
             <input placeholder="Password" type="password" required minLength="6" className="loginInput" ref={password} />
             <button className="loginButton" type="submit">{isFetching ? 
-                (<CircularProgress color="warning" size={40}/>)
+                (<CircularProgress color="inherit" size={40}/>)
                : 
                 ("Log In")
               }</button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
-              Create a New Account
+              {isFetching ? 
+                (<CircularProgress color="inherit" size={40}/>)
+               : 
+                ("Create a New Account")
+              }
             </button>
           </form>
         </div>
