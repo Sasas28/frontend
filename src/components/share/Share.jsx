@@ -3,14 +3,13 @@ import "./share.css"
 import {PermMedia, Label,Room, EmojiEmotions} from "@mui/icons-material"
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
-import { env } from 'node:process'
 
 export default function Share() {
 
   const { user } = useContext(AuthContext)
   const desc = useRef()
   const [file, setFile] = useState(null)
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER
+  const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
 
   const submitHandler = async (e) => {
     e.preventDefault();
