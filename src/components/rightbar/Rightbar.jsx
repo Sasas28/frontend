@@ -1,10 +1,25 @@
 import "./rightbar.css"
 import { Users } from "../../dummyData"
 import Online from "../online/Online"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 export default function Rightbar({ user }) {
 
     const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
+    const [friends, setFriends] = useState([])
+
+    useEffect(() => {
+      const getFriends = async () => {
+        try {
+          const friendList = await axios.get("/api/users/friends/" + user._id);
+          setFriends(friendList.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      getFriends();
+    }, [user])
 
     const HomeRightbar = () => {
       return (
@@ -53,46 +68,6 @@ export default function Rightbar({ user }) {
                 className="rightbarFollowingImg"
               />
               <span className="rightbarFollowingName">Ajaster Zamora</span>
-            </div>
-            <div className="rightbarFollowing">
-              <img
-                src={PF + "/person/2.jpeg"}
-                alt=""
-                className="rightbarFollowingImg"
-              />
-              <span className="rightbarFollowingName">Marian Rivera</span>
-            </div>
-            <div className="rightbarFollowing">
-              <img
-                src={PF + "/person/3.jpeg"}
-                alt=""
-                className="rightbarFollowingImg"
-              />
-              <span className="rightbarFollowingName">Anne Curtis</span>
-            </div>
-            <div className="rightbarFollowing">
-              <img
-                src={PF + "/person/4.jpeg"}
-                alt=""
-                className="rightbarFollowingImg"
-              />
-              <span className="rightbarFollowingName">Daniel Padilla</span>
-            </div>
-            <div className="rightbarFollowing">
-              <img
-                src={PF + "/person/5.jpeg"}
-                alt=""
-                className="rightbarFollowingImg"
-              />
-              <span className="rightbarFollowingName">Dingdong</span>
-            </div>
-            <div className="rightbarFollowing">
-              <img
-                src={PF + "/person/6.jpeg"}
-                alt=""
-                className="rightbarFollowingImg"
-              />
-              <span className="rightbarFollowingName">Liza Soberano</span>
             </div>
           </div>
         </>
