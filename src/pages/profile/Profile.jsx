@@ -5,7 +5,7 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 
 export default function Profile() {
@@ -13,6 +13,7 @@ export default function Profile() {
   const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
   const [user,setUser] = useState({})
   const username = useParams().username
+  
 
   useEffect(()=>{
     const fetchUser = async ()=>{
@@ -20,7 +21,7 @@ export default function Profile() {
       setUser(res.data)
     }
     fetchUser()
-  },[])
+  },[username])
 
     return (
       <>
