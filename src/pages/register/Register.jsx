@@ -31,24 +31,24 @@ export default function Register() {
   }
 
   return (
-    <div className="login">
-      <div className="loginWrapper">
-        <div className="loginLeft">
-          <h3 className="loginLogo">Socialfeeds</h3>
-          <span className="loginDesc">
+    <div className="register">
+      <div className="registerWrapper">
+        <div className="registerLeft">
+          <h3 className="registerLogo">Socialfeeds</h3>
+          <span className="registerDesc">
             Connect with friends around you on Socialfeeds.
           </span>
         </div>
-        <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
-            <input placeholder="Username" required ref={username} className="loginInput" />
-            <input placeholder="Email" required ref={email} className="loginInput" type="email" />
-            <input placeholder="Password" required ref={password} className="loginInput" type="password"
+        <div className="registerRight">
+          <form className="registerBox" onSubmit={handleClick}>
+            <input placeholder="Username" required ref={username} className="registerInput" />
+            <input placeholder="Email" required ref={email} className="registerInput" type="email" />
+            <input placeholder="Password" required ref={password} className="registerInput" type="password"
               minLength="6" />
-            <input placeholder="Password Again" required ref={passwordAgain} className="loginInput" type="password" />
-            <button className="loginButton" type="submit">Sign Up</button>
+            <input placeholder="Password Again" required ref={passwordAgain} className="registerInput" type="password" />
+            <button className="registerButton" type="submit">Sign Up</button>
             <Link to="/login" style={{ textDecoration: "none" }}>
-              <button className="loginRegisterButton">
+              <button className="registerRegisterButton">
                 Log into Account
               </button>
             </Link>

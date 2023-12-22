@@ -1,16 +1,37 @@
 import "./topbar.css"
 import { Search, Person, Chat, Notifications } from "@mui/icons-material"
-import { useContext } from "react";
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
 
 export default function Topbar() {
 
-  const { user } = useContext(AuthContext)
-  const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER
+  const { user, dispatch } = useContext(AuthContext);
+  const PF = import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER;
+  const history = useHistory();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const confirmLogout = () => {
+    setIsLogoutModalOpen(false);
+
+    localStorage.removeItem("user");
+
+    dispatch({ type: "LOGOUT" });
+
+    history.push("/login");
+  };
+
+  const cancelLogout = () => {
+    setIsLogoutModalOpen(false);
+  };
 
   return (
     <div className="topbarContainer">
+      <div className={`overlay ${isLogoutModalOpen ? "showOverlay" : ""}`}/>
       <div className="topbarLeft">
       <Link to="/" style={{ textDecoration: "none" }}>
         <span className="logo">SocialFeeds</span>
@@ -48,6 +69,9 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
+        <div className="topbarLogout">
+          <span className="logoutLink" onClick={handleLogout}>Logout</span>
+        </div>
         <Link to={`/profile/${user.username}`}>
           <img src={
               user.profilePicture
@@ -56,6 +80,17 @@ export default function Topbar() {
             } alt="" className="topbarImg"/>
         </Link>
       </div>
+      {isLogoutModalOpen && (
+        <div className="logoutModal">
+          <div className="logoutModalContent">
+            <p>Are you sure you want to logout?</p>
+            <div>
+              <button onClick={confirmLogout}>Yes</button>
+              <button onClick={cancelLogout}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

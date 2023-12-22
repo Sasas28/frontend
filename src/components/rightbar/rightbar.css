@@ -71,6 +71,7 @@
 .rightbarFollowing{
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
   cursor: pointer;
 }
@@ -90,7 +91,7 @@
   margin-top: 30px;
   margin-bottom: 10px;
   border: none;
-  background-color: #1872f2;
+  background-color: #7750F6;
   color: white;
   border-radius: 5px;
   padding: 5px 10px;

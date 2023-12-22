@@ -48,3 +48,14 @@
 .profileRightBottom{
     display: flex;
 }
+
+.editBtn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #7750F6;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}

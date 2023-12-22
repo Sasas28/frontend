@@ -1,5 +1,7 @@
 import { Users } from "../../dummyData";
-import CloseFriend from "../closeFriend/CloseFriend";
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import FriendSuggestion from "../friendSuggestion/FriendSuggestion";
 import "./sidebar.css"
 import { 
     RssFeed,
@@ -11,8 +13,28 @@ import {
     WorkOutline,
     Event,
     School, } from "@mui/icons-material"
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Sidebar() {
+
+  const { user: currentUser } = useContext(AuthContext);
+  const [nonFriends, setNonFriends] = useState([]);
+
+  useEffect(() => {
+    const fetchNonFriends = async () => {
+      try {
+        const response = await axios.get(`/api/users/nonfriends/${currentUser._id}`);
+        setNonFriends(response.data);
+      } catch (error) {
+        console.error("Error fetching non-friends:", error);
+      }
+    };
+
+    if (currentUser) {
+      fetchNonFriends();
+    }
+  }, [currentUser]);
+
     return (
       <div className="sidebar">
         <div className="sidebarWrapper">
@@ -56,9 +78,10 @@ export default function Sidebar() {
           </ul>
           <button className="sidebarButton">Show More</button>
           <hr className="sidebarHr" />
+          <h4 className="friendListTitle">Add new friends</h4>
           <ul className="sidebarFriendList">
-            {Users.map((u) => (
-              <CloseFriend key={u.id} user={u} />
+            {nonFriends.map((nonFriend) => (
+              <FriendSuggestion key={nonFriend._id} user={nonFriend} />
             ))}
           </ul>
         </div>
